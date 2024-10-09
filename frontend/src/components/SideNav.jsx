@@ -5,6 +5,7 @@ import { FaCog } from "react-icons/fa";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import Logo from "../assets/logo.png"
 import { Link } from "react-router-dom";
+import { AiOutlineGold } from "react-icons/ai";
 
 
 const SideNavBtn = (props) => {
@@ -46,6 +47,7 @@ const SideNav = () => {
                <SideNavBtn text="Cvs" icon={<IoDocumentTextOutline/>} link="/dashboard/cvs"/> 
                <SideNavBtn text="Profile" icon={<FaRegUser/>} link="/dashboard/profile"/> 
                <SideNavBtn text="Settings" icon={<HiOutlineCog6Tooth/>} link="/dashboard/settings"/> 
+               <SideNavBtn text="Assets" icon={<AiOutlineGold />} link="/dashboard/assets"/> 
             </div>
         </div>
     )

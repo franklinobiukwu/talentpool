@@ -17,10 +17,10 @@ const FormSelector = (props) => {
                     props.options.map(
                         (option) => (
                             <option
-                                key={option.isoCode}
-                                value={option.name}
+                                key={option.isoCode ? option.isoCode : option}
+                                value={option.name ? option.name : option}
                             >
-                                {option.name}
+                                {option.name ? option.name : option}
                             </option>
                         ))
                 }

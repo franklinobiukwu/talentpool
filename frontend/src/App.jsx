@@ -23,6 +23,7 @@ import Feed from './pages/Feed.jsx';
 import Cvs from './pages/Cvs.jsx';
 import Profile from './pages/Profile.jsx';
 import Setting from './pages/Settings.jsx';
+import Assets from './pages/Assets.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements([
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
             <Route path="cvs" element={<Cvs/>}/>
             <Route path="profile" element={<Profile/>}/>
             <Route path="settings" element={<Setting/>}/>
+            <Route path="assets" element={<Assets/>}/>
         </Route>
     ])
 )
