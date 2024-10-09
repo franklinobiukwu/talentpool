@@ -28,17 +28,19 @@ const AssetForm = () => {
     };
 
     return (
-        <div>
-            <h3>New Category Name</h3>
+        <div className="rounded border shadow-sm px-5 py-5">
+            <h3 
+                className="text-blue-primary font-inter font-bold text-xl mb-5"
+            >New Category Name</h3>
             <form>
                 <div>
                     <div>
-                        <label htmlFor="category">Category</label>
                         <FormSelector
                             name="category"
                             id="category"
                             options={cate}
-                            label="Work Experience"
+                            label="Category"
+                            style="flex"
                         />
                     </div>
                     

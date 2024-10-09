@@ -41,4 +41,16 @@ const signupUser = async (req, res) => {
     }
 }
 
-export { loginUser, signupUser}
+
+// Update or Create User Profile
+const updateProfile = async (req, res) => {
+
+}
+
+// Fetch User Profile
+const fetchProfile = async (req, res) => {
+
+}
+
+
+export { loginUser, signupUser, updateProfile, fetchProfile}

@@ -1,10 +1,10 @@
 const FormSelector = (props) => {
 
     return (
-        <div>
+        <div className={props.style}>
             <label
                 htmlFor={props.name}
-                className="font-medium text-md text-blue-primary block mb-1"
+                className={`font-medium text-md text-blue-primary block mb-1 ${props.style && 'mr-5'}`}
             >{props.label}</label>
             <select 
                 name={props.name} 
