@@ -41,4 +41,8 @@ const signupUser = async (req, res) => {
     }
 }
 
+// User Profile 
+const userProfile = async (req, res) => {
+    
+}
 export { loginUser, signupUser}
