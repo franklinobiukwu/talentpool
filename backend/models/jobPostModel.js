@@ -1,16 +1,25 @@
 import {Schema, model} from "mongoose";
-import { CurrencyCodes } from "validator/lib/isISO4217";
 
 //Define post schema
-const PostSchema = new mongoose.Schema(
+const PostSchema = new Schema(
     {
       title: {
         type: String,
-        required: [true, "A Blog job must have a title"],
+        required: [true, "A job must have a title"],
       },
       description: {
         type: String,
-        required: [true, "A Blog job must have a description"],
+        required: [true, "A job must have a description"],
+      },
+
+      requirements: {
+        type: String,
+        required: [true, "A job must have requirements"],
+      },
+
+      duties: {
+        type: String,
+        required: [true, "A job must have duties"],
       },
 
       location:{
@@ -20,6 +29,13 @@ const PostSchema = new mongoose.Schema(
 
       salary: {
         trype: Number
+      },
+      currency: {
+        type: String,
+        },
+      company: {
+        type: String,
+        required: [true, "A job must have a company"],
       },
 
       tags: [String],
@@ -32,7 +48,7 @@ const PostSchema = new mongoose.Schema(
         required: true,
       },
       authorId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
       },
       state: {
@@ -42,7 +58,7 @@ const PostSchema = new mongoose.Schema(
       },
       body: {
         type: String,
-        required: [true, "A Blog Post must contain a body"],
+        required: [true, "A job Post must contain a body"],
       },
       readTime: {
         type: String,
@@ -50,5 +66,7 @@ const PostSchema = new mongoose.Schema(
     },
     { timestamps: true }
   );
-  const Post = mongoose.model("Post", PostSchema);
-  module.exports = Post;
+  const Post = model("Post", PostSchema);
+  export default Post
+
+

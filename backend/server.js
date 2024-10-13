@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 
 // Import Routes
 import userRoutes from './routes/userRoutes/userRoutes.js'
-import jobRoutes from "./routes/jobRoutes/jobRoutes.js"
+import jobRoutes from './routes/jobRoutes/jobRoutes.js'
 
 // Port to listen
 const PORT = process.env.PORT || 3000

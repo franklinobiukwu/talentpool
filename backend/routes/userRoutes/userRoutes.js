@@ -10,6 +10,5 @@ router.post('/login', loginUser)
 router.post('/signup', signupUser)
 
 //Profile
-router.post('/profile', userProfile)
 
 export default router
