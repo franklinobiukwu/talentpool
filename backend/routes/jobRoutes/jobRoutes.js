@@ -4,15 +4,15 @@ import { listAllJobs, createJobPost, updateJobPost, deleteJobPost } from '../../
 const router = express.Router()
 
 // list all job posts route
-router.post('/login', listAllJobs)
+router.post('/', listAllJobs)
 
 // create a job post route
-router.post('/signup', createJobPost)
+router.post('/addJob', createJobPost)
 
 //update a job post route
-router.post('/profile', updateJobPost)
+router.post('/updateJob', updateJobPost)
 
 // delete a job post route
-router.delete('/delete/:id', deleteJobPost)
+router.delete('/deleteJob/:id', deleteJobPost)
 
 export default router
