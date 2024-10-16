@@ -7,12 +7,12 @@ const router = express.Router()
 router.get('/', getAllJobPosts)
 
 // create a job post route
-router.post('/addJob', createJobPost)
+router.post('/addjob', createJobPost)
 
 //update a job post route
-router.post('/updateJob', updateJobPost)
+router.post('/updatejob/:id', updateJobPost)
 
 // delete a job post route
-router.delete('/deleteJob/:id', deleteJobPost)
+router.delete('/deletejob/:id', deleteJobPost)
 
 export default router
