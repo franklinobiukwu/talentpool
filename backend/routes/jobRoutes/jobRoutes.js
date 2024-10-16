@@ -10,9 +10,9 @@ router.get('/', getAllJobPosts)
 router.post('/addJob', createJobPost)
 
 //update a job post route
-//router.post('/updateJob', updateJobPost)
+router.post('/updateJob', updateJobPost)
 
 // delete a job post route
-//router.delete('/deleteJob/:id', deleteJobPost)
+router.delete('/deleteJob/:id', deleteJobPost)
 
 export default router
