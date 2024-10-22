@@ -11,7 +11,7 @@ const SubmitButton = (props) => {
                     ${(props.disabled || props.isLoading)&&'bg-blue-trans border-none'}`;
     return (
         <button
-            type="button"
+            type={props.type || "button"}
             onClick={props.onClick}
             disabled={props.disabled || props.isLoading}
             className={props.style && (props.style == 'transparent' ? transparent : solid)}

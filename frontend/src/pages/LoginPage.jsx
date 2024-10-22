@@ -1,7 +1,7 @@
 import Header from "../components/Header.jsx"
 import LoginForm from "../components/LoginForm.jsx"
 
-const Login = () => {
+const LoginPage = () => {
     return (
         <div>
             <Header/>
@@ -17,4 +17,4 @@ const Login = () => {
         </div>
     )
 }
-export default Login
+export default LoginPage

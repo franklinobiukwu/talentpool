@@ -1,7 +1,7 @@
 import CvCard from "../components/CvCard"
 import SearchBar from "../components/SearchBar"
 
-const Cvs = () => {
+const CvsPage = () => {
     return (
         <div className="p-10 max-w-full">
             {/* Search Bar */}
@@ -24,4 +24,4 @@ const Cvs = () => {
         </div>
     )
 }
-export default Cvs
+export default CvsPage

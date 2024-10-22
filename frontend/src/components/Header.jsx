@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 
 const Header = () => {
 
+    const user = localStorage.getItem('user')
+
     return (
         <div>
             <div className="flex w-full justify-between py-5 px-8">
@@ -14,6 +16,7 @@ const Header = () => {
                     </div>
                     <p className="font-extrabold font-inter text-blue-primary text-xl">TalentPool</p>
                 </Link>
+
                 {/* Login and Signup Buttons*/}
                 <div className="flex items-center">
                     <div className="mr-4">

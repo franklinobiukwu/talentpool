@@ -3,7 +3,7 @@ import InfoCard from "../components/InfoCard"
 import ListCardHeading from "../components/ListCardHeading"
 import PersonalInfo from "../components/PersonalInfoForm"
 
-const Profile = () => {
+const ProfilePage = () => {
     return (
         <div className="lg:grid grid-cols-12 gap-4 p-10">
             <div className="col-span-6">
@@ -34,4 +34,4 @@ const Profile = () => {
         </div>
     )
 }
-export default Profile
+export default ProfilePage

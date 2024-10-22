@@ -1,44 +1,41 @@
 import './App.css'
-import LandingPage from './pages/landing'
-import SideNav from './components/SideNav'
-import CvCard from "./components/CvCard.jsx"
-import InfoCard from "./components/InfoCard.jsx"
-import AboutMeForm from "./components/AboutMeForm.jsx"
-import ListCard from "./components/ListCard.jsx"
-import ListCardBtnIcon from "./components/ListCardBtnIcon.jsx"
-import PersonalInfo from "./components/PersonalInfoForm.jsx"
-import SkillCard from "./components/SkillsCard.jsx"
-import ListCardHeading from "./components/ListCardHeading.jsx"
-import Dashboard from "./layouts/DashboardLayout.jsx"
+import LandingPage from './pages/LandingPage.jsx'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 
 // Pages
-import Login from "./pages/Login.jsx"
+import LoginPage from "./pages/LoginPage.jsx"
+import ProfilePage from './pages/ProfilePage.jsx';
+import SettingPage from './pages/SettingsPage.jsx';
+import SignupPage from './pages/SignupPage.jsx';
+import FeedPage from './pages/FeedPage.jsx';
+import CvsPage from './pages/CvsPage.jsx';
+import AssetsPage from './pages/AssetsPage.jsx'
+import AssetCategoryPage from './pages/AssetCategoryPage.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 
 // Layouts
 import Base from './layouts/Base.jsx';
 import DashboardLayout from './layouts/DashboardLayout.jsx'
-import Signup from './pages/Signup.jsx';
-import Feed from './pages/Feed.jsx';
-import Cvs from './pages/Cvs.jsx';
-import Profile from './pages/Profile.jsx';
-import Setting from './pages/Settings.jsx';
-import Assets from './pages/Assets.jsx'
+import RequireAuth from './layouts/RequireAuth.jsx';
 
 const router = createBrowserRouter(
     createRoutesFromElements([
-        <Route path="/" element={<Base/>}>
+        <Route path="/" element={<Base/>} errorElement={<ErrorPage/>}>
             <Route index element={<LandingPage/>}/>
-            <Route path="login" element={<Login/>}/>
-            <Route path="signup" element={<Signup/>}/>
+            <Route path="login" element={<LoginPage/>}/>
+            <Route path="signup" element={<SignupPage/>}/>
         </Route>,
+        <Route path='/' element={<RequireAuth/>}>
         <Route path="/dashboard" element={<DashboardLayout/>}>
-            <Route index element={<Feed/>}/>
-            <Route path="cvs" element={<Cvs/>}/>
-            <Route path="profile" element={<Profile/>}/>
-            <Route path="settings" element={<Setting/>}/>
-            <Route path="assets" element={<Assets/>}/>
+        <Route index element={<FeedPage/>}/>
+        <Route path="cvs" element={<CvsPage/>}/>
+        <Route path="profile" element={<ProfilePage/>}/>
+        <Route path="settings" element={<SettingPage/>}/>
+        <Route path="assets" element={<AssetsPage/>}/>
+        <Route path="assets/categories/:categoryId" element={<AssetCategoryPage/>}/>
         </Route>
+
+        </Route>,
     ])
 )
 

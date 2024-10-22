@@ -8,6 +8,10 @@ const userSchema = new Schema({
         required: true,
         trim: true,
     },
+    middlename: {
+        type: String,
+        trim: true,
+    },
     lastname: {
         type: String,
         required: true,
@@ -23,6 +27,21 @@ const userSchema = new Schema({
         type: String,
         enum: ['male', 'female'],
         required: true,
+    },
+    dob: {
+        type: Date,
+    },
+    phone: {
+        type: Number,
+    },
+    country: {
+        type: String,
+    },
+    state: {
+        type: String,
+    },
+    city: {
+        type: String,
     },
     password: {
         type: String,

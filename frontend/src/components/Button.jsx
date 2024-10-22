@@ -1,3 +1,4 @@
+import { Puff } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 
 const Button = (props) => {
@@ -15,6 +16,16 @@ const Button = (props) => {
             type="button"
         >
         <Link to={props.path}>
+        {props.isLoading?(
+            <Puff
+                visible={true}
+                color="#fafafa"
+                height="25"
+                width="40"
+                radius={"110"}
+                ariaLabel="ring-loading"
+            />
+        ):
             <div className={props.style && (props.style == 'transparent' ? transparent : solid)}>
                 {props.icon &&
 
@@ -26,6 +37,7 @@ const Button = (props) => {
                     {props.text}
                 </div>
             </div>
+        }
         </Link>
         </button>
     )

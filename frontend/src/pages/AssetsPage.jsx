@@ -1,13 +1,15 @@
 import AssetCategoryCard from "../components/AssetCategoryCard"
 import AssetForm from "../components/AssetForm"
 
-const Assets = () => {
+const AssetsPage = () => {
     return (
         <div>
-            <AssetCategoryCard/>
+            <AssetCategoryCard
+                id="1"
+            />
             <h2>Asset Page</h2>
             <AssetForm/>
         </div>
     )
 }
-export default Assets
+export default AssetsPage

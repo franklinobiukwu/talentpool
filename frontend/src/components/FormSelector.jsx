@@ -15,9 +15,10 @@ const FormSelector = (props) => {
                 <option value="" disabled selected> Select {props.label}</option>
                 {
                     props.options.map(
-                        (option) => (
+                        (option, key) => (
                             <option
-                                key={option.isoCode ? option.isoCode : option}
+                                //key={option.isoCode ? option.isoCode : option}
+                                key={key}
                                 value={option.name ? option.name : option}
                             >
                                 {option.name ? option.name : option}

@@ -2,10 +2,12 @@ import express from 'express'
 import cors from 'cors'
 import 'dotenv/config'
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser'
 
 
 // Import Routes
 import userRoutes from './routes/userRoutes/userRoutes.js'
+import tokenRoutes from './routes/tokenRoutes.js'
 
 // Port to listen
 const PORT = process.env.PORT || 3000
@@ -15,10 +17,15 @@ const app = express()
 
 // Middlewares
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,// Allows cookies to be sent from client
+}))
+app.use(cookieParser())
 
 // Routes
 app.use("/user", userRoutes)
+app.use("/token", tokenRoutes)
 
 
 // Connect to database

@@ -4,7 +4,7 @@ import AssetImage from "../assets/asset.png"
 const AssetCategoryCard = (props) => {
     return (
         <div className="w-60 overflow-hidden rounded shadow-sm shadow-blue-trans">
-            <Link to="/dashboard/asset/category">
+            <Link to={`/dashboard/assets/categories/${props.id}`}>
                 {/* Image */}
                 <div>
                     <img src={AssetImage} alt={`asset-${props.title}`}/>

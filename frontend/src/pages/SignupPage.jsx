@@ -1,7 +1,7 @@
 import Header from "../components/Header.jsx";
 import SignupForm from "../components/SignupForm.jsx"
 
-const Signup = () => {
+const SignupPage = () => {
     return (
         <div>
             <Header/>
@@ -16,4 +16,4 @@ const Signup = () => {
         </div>
     )
 }
-export default Signup
+export default SignupPage
