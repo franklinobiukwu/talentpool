@@ -20,6 +20,23 @@ const FormInputField = (props) => {
         <div>
             {/* Asset Field */}
             <div className="flex gap-4">
+                <div>
+                    <label
+                        htmlFor="inputKey"
+                        className="mr-2 font-medium text-md text-blue-primary block mb-1"
+                    >
+                            Field
+                    </label>
+                    <input
+                        type="text"
+                        name="inputKey"
+                        id="inputKey"
+                        placeholder={props.keySample}
+                        value={props.inputKey}
+                        onChange={(e) => props.setInputKey(e.target.value)}
+                        className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                    />
+                </div>
                 {/* Asset Type*/}
                 <div>
                     <label

@@ -2,47 +2,32 @@ import { useEffect, useState } from "react";
 import { Country, State, City } from "country-state-city";
 import FormSelector from "./FormSelector.jsx";
 import Button from "./Button.jsx";
-import { FaRegSave } from "react-icons/fa"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import useEndpoint from "../hooks/useEndPoint.jsx";
-import useAxiosInstance from "../hooks/useAxiosInstance.jsx";
+import { FaPen, FaRegSave } from "react-icons/fa"
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { fetchData, patchData, postData } from "../hooks/useFetchPost.jsx";
+import Skeleton from "react-loading-skeleton";
+import { MdOutlineCancel } from "react-icons/md";
 
-// GET FORM DATA
-const fetchPersonalInfo = (config) => {
-    const axiosInstance = useAxiosInstance()
-    console.log(config, "The config")
-    return axiosInstance.get('/user/profile', config)
-}
-
-// POST Form Data To Backend
-const updatePersonalInfo = (formData, config) => {
-    const axiosInstance = useAxiosInstance()
-   return axiosInstance.post('/personal-info', {...formData}, config) 
-}
 
 const PersonalInfo = () => {
 
-    // FETCH User info from local storage
-    const user = JSON.parse(localStorage.getItem('user')) || null
-
-    // Endpoint and Config
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.accessToken}`
-        }
-    }
+    const [edit, setEdit] = useState(false)
 
     // FETCH User Personal Info from db
     const {data, isLoading, isError: isQueryError, error: queryError} = useQuery({
         queryKey: ['personalInfo'],
-        queryFn: () => fetchPersonalInfo(config),
+        queryFn: () => fetchData('/user/profile'),
     })
 
-    const [fname, setFname] = useState("");
-    const [mname, setMname] = useState("");
-    const [lname, setLname] = useState("");
+    // Convert '1995-08-05T00:00:00.000Z' to '1995-08-05'
+    const formatDate = (isoDateString) => {
+        const date = new Date(isoDateString);
+        return date.toISOString().split('T')[0];  // Returns '1995-08-05'
+    }
+
+    const [fname, setFname] = useState(data?.data?.user?.firstname || "");
+    const [mname, setMname] = useState(data?.data?.user?.middlename || "");
+    const [lname, setLname] = useState(data?.data?.user?.lastname || "");
     const [gender, setGender] = useState("male");
     const [dob, setDob] = useState("");
     const [email, setEmail] = useState("");
@@ -51,8 +36,20 @@ const PersonalInfo = () => {
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
 
-    // User Details
-
+    useEffect(() => {
+        const user = data?.data
+        setFname(user?.firstname || "")
+        setMname(user?.middlename || "")
+        setLname(user?.lastname || "")
+        setGender(user?.gender || "male")
+        setDob(user?.dob && formatDate(user?.dob) || "")
+        setEmail(user?.email || "")
+        setPhone(user?.phone || "")
+        setCountry(user?.country || "")
+        setState(user?.state || "")
+        setCity(user?.city || "")
+        console.log(user, "User Profile Info")
+    }, [data])
 
     // Get all countries and states 
     const countries = Country.getAllCountries();
@@ -83,7 +80,8 @@ const PersonalInfo = () => {
 
     // Mutate
     const {mutate, isPending, isError, error } = useMutation({
-        mutationFn: updatePersonalInfo,
+        mutationFn: patchData,
+        onSuccess: (data) => console.log(`Success updating profile`, data.data,)
     })
 
     const handleSave = () => {
@@ -93,9 +91,32 @@ const PersonalInfo = () => {
             return
         }
         const formData = {
-            fname, mname, lname, gender, dob, email, phone, country, state, city
+            firstname: fname, middlename: mname, lastname:lname,
+            gender, dob, email, phone, country, state, city
         }
-        mutate(formData, config)
+        console.log(formData, "Form data to save")
+        mutate({endpoint: '/user/profile', data: formData})
+        if (isError){
+            alert(error)
+        } else {
+            setEdit(!edit)
+        }
+    }
+
+    const handleEdit = () => {
+        setFname(fname)
+        setMname(mname)
+        setLname(lname)
+        setGender(gender)
+        setDob(dob)
+        setEmail(email)
+        setPhone(phone)
+        setCountry(country)
+        setState(state)
+        setCity(city)
+        setEdit(!edit)
+
+        console.log(fname, mname, lname, gender, dob, email, phone, country, state, city)
     }
     
     return (
@@ -115,16 +136,21 @@ const PersonalInfo = () => {
                             >
                                 First name
                             </label>
-                            <input
+                            {data?(
+                                <input
                                 id="fname"
                                 name="fname"
                                 type="text"
                                 placeholder="John"
-                                className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                                className={
+                                    `rounded border px-2 py-0.5 w-52 text-blue-primary
+                                    ${!edit && 'border-none bg-transparent px-0'}`}
                                 value={fname}
                                 onChange={(e) => setFname(e.target.value)}
-//                                disabled={true}
-                            />
+                                disabled={!edit}
+                                />
+                            )
+                            : (<Skeleton />)}
                         </div>
                         {/* Middle Name */}
                         <div>
@@ -139,9 +165,12 @@ const PersonalInfo = () => {
                                 name="mname"
                                 type="text"
                                 placeholder="Nigel"
-                                className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                                className={
+                                    `rounded border px-2 py-0.5 w-52 text-blue-primary
+                                    ${!edit && 'border-none bg-transparent px-0'}`}
                                 value={mname}
                                 onChange={(e) => setMname(e.target.value)}
+                                disabled={!edit}
                             />
                         </div>
                     </div>
@@ -161,9 +190,12 @@ const PersonalInfo = () => {
                                 name="lname"
                                 type="text"
                                 placeholder="Doe"
-                                className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                                className={
+                                    `rounded border px-2 py-0.5 w-52 text-blue-primary
+                                    ${!edit && 'border-none bg-transparent px-0'}`}
                                 value={lname}
                                 onChange={(e) => setLname(e.target.value)}
+                                disabled={!edit}
                             />
                         </div>
 
@@ -178,9 +210,12 @@ const PersonalInfo = () => {
                             <select
                                 id="gender"
                                 name="gender"
-                                className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                                className={
+                                    `rounded border px-2 py-0.5 w-52 text-blue-primary
+                                    ${!edit && 'border-none bg-transparent px-0'}`}
                                 value={gender}
                                 onChange={(e) => setGender(e.target.value)}
+                                disabled={!edit}
                             >
                                 <option value={"male"}>Male</option>
                                 <option value={"female"}>Female</option>
@@ -202,9 +237,12 @@ const PersonalInfo = () => {
                                 id="dob"
                                 name="dob"
                                 type="date"
-                                className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                                className={
+                                    `rounded border px-2 py-0.5 w-52 text-blue-primary
+                                    ${!edit && 'border-none bg-transparent px-0'}`}
                                 value={dob}
                                 onChange={(e) => setDob(e.target.value)}
+                                disabled={!edit}
                             />
                         </div>
                         {/* Email */}
@@ -220,9 +258,12 @@ const PersonalInfo = () => {
                                 name="email"
                                 type="email"
                                 placeholder="johndoe@example.com"
-                                className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                                className={
+                                    `rounded border px-2 py-0.5 w-52 text-blue-primary
+                                    ${!edit && 'border-none bg-transparent px-0'}`}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                disabled={!edit}
                             />
                         </div>
                     </div>
@@ -241,9 +282,12 @@ const PersonalInfo = () => {
                                 name="phone"
                                 type="tel"
                                 placeholder="+2348 056 681 680"
-                                className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                                className={
+                                    `rounded border px-2 py-0.5 w-52 text-blue-primary
+                                    ${!edit && 'border-none bg-transparent px-0'}`}
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
+                                disabled={!edit}
                             />
                         </div>
                         {/* Country Selector */}
@@ -252,7 +296,9 @@ const PersonalInfo = () => {
                                 options={countries}
                                 label="Country"
                                 name="country"
+                                value={country}
                                 setValue={setCountry}
+                                disabled={!edit}
                             />
                         </div>
                     </div>
@@ -265,8 +311,10 @@ const PersonalInfo = () => {
                                 options={states}
                                 label="State"
                                 name="state"
+                                value={state}
                                 setValue={setState}
                                 className="mr-5"
+                                disabled={!edit}
                             />
                         </div>
                         {/* City Selector */}
@@ -275,17 +323,34 @@ const PersonalInfo = () => {
                                 options={cities}
                                 label="City"
                                 name="city"
+                                value={city}
                                 setValue={setCity}
+                                disabled={!edit}
                             />
                         </div>
                     </div>
                     {/*-----------Submit----------------*/}
                     <div className="flex items-center justify-center">
+                        {edit && (
+                            <div className="mr-2">
+                            <Button
+                                text="Cancel"
+                                icon={<MdOutlineCancel/>}
+                                style="transparent"
+                                onClick={() => setEdit(!edit)}
+                            />
+                            </div>
+                        )}
+
                         <Button
-                            text="Save"
-                            style="default"
-                            icon={<FaRegSave/>}
-                            onClick={() => handleSave()}
+                            text={edit?'Save' : 'Edit'}
+                            style={edit? 'solid':'transparent'}
+                            icon={edit? (<FaRegSave/>) : (<FaPen/>)}
+                            onClick={edit? () => {
+                                handleSave()
+                            } : () => {
+                                handleEdit()
+                            }}
                             isLoading={isPending}
                             disabled={isPending}
                         />

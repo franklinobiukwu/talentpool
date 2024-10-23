@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-import Button from "./Button"
-import { document } from "postcss"
 import SubmitButton from "./SubmitButton.jsx";
 import axios from "axios";
 import useEndpoint from "../hooks/useEndPoint.jsx";
@@ -23,7 +21,6 @@ const SignupForm = () => {
     const [isValidEmail, setIsValidEmail] = useState(false)
     const [isValidPassword, setIsValidPassword] = useState(false)
 
-    console.log(`isValidLastName ${isValidLastName}`)
     // Loading State
     const [isLoading, setIsLoading] = useState(false)
 
@@ -95,16 +92,14 @@ const SignupForm = () => {
         setIsLoading(true)
         const data = {firstname, lastname, email, gender, password, confirmPassword}
         try{
-            console.log(data)
             const response = await axios.post(`${endpoint}/user/signup`, data)
-            console.log(response)
+            localStorage.setItem(JSON.stringify(response.data))
             navigate('/dashboard')
         }catch(error){
             console.error(error.response.data)
         }finally{
             setIsLoading(false)
         }
-        console.log(isValidEmail, passwordMatchError, isValidPassword)
     }
 
     return (

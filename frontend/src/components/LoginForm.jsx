@@ -33,8 +33,6 @@ const LoginForm = () => {
     const {mutate, isPending, isError, error} = useMutation({
         mutationFn: (userData) => axios.post(`${endpoint}/user/login`, userData),
         onSuccess: (data) => {
-//            queryClient.setQueryData(['user'], data.data)
-            console.log(data.data, "Na the user")
             localStorage.setItem('user', JSON.stringify(data.data))
             navigate('/dashboard')
         }

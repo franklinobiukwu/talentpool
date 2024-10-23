@@ -9,8 +9,11 @@ const FormSelector = (props) => {
             <select 
                 name={props.name} 
                 id={props.name} 
+                value={props.value}
                 onChange={(e)=>props.setValue(e.target.value)}
-                className="rounded border px-2 py-0.5 w-52"
+                className={`rounded border px-2 py-0.5 w-52 
+                    ${props.disabled && 'border-none bg-transparent px-0'}`}
+                disabled={props.disabled}
             >
                 <option value="" disabled selected> Select {props.label}</option>
                 {

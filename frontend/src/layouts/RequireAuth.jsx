@@ -1,11 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import { Navigate, Outlet } from "react-router-dom"
-import useAxiosInstance from "../hooks/useAxiosInstance.jsx";
+import { fetchData } from "../hooks/useFetchPost.jsx";
 
 const RequireAuth = () => {
-
-    // Get axios instance
-    const axiosInstance = useAxiosInstance()
 
     // Check if user is Logged In
     const user = localStorage.getItem('user')
@@ -13,7 +10,7 @@ const RequireAuth = () => {
     // Validate User Token
     const {isSuccess} = useQuery({
         queryKey: ['confirmToken'],
-        queryFn: axiosInstance.get("/token/confirm-token"),
+        queryFn: () => fetchData("/token/confirm-token"),
         staleTime: 0,
         cacheTime: 0
     })

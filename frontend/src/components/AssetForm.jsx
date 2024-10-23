@@ -1,132 +1,127 @@
-import { useState } from "react";
-import FormSelector from "./FormSelector.jsx";
-import FormInputField from "./FormInputField.jsx";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import Button from "./Button.jsx";
+import { useState } from "react"
+import { 
+    MDXEditor, headingsPlugin, listsPlugin,
+    quotePlugin, thematicBreakPlugin } from "@mdxeditor/editor"
+import '@mdxeditor/editor/style.css'
 
 const AssetForm = () => {
-    const [fields, setFields] = useState([
-        { inputKey: '', inputType: 'Short Text', inputValue: '' }, // Initial field
-    ]);
+    const [hasStartDate, setHasStartDate] = useState(false)
+    const [hasEndDate, setHasEndDate] = useState(false)
 
-    const [assetCategory, setAssetCategory] = useState('')
-    const [assetName, setAssetName] = useState('')
-
-
-    const cate = [
-        "Professional Summary", "Work Experience", "Education", "Skills", "Certifications & Licenses"
-    ];
-
-    const addField = () => {
-        setFields([...fields, { inputKey: '', inputValue: '' }]);
-    };
-
-    const removeField = (index) => {
-        const newFields = fields.filter((_, i) => i !== index);
-        setFields(newFields);
-    };
-
-    const updateField = (index, key, value) => {
-        const newFields = [...fields];
-        newFields[index] = { ...newFields[index], [key]: value };
-        setFields(newFields);
-    };
-
-    const handleSubmit = () => {
-        console.log(assetName, assetCategory, fields)
-    }
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    const [title, setTitle] = useState('')
+    const [subtitle, setSubtitle] = useState('')
+    const [description, setDescription] = useState('')
 
     return (
-        <div className="rounded border shadow-sm px-5 py-5">
-            <h3 
-                className="text-blue-primary font-inter font-bold text-xl mb-5"
-            >New Category Name</h3>
+        <div>
             <form>
+                <div className="flex">
+                {/* ==== Has Start Date ==== */}
                 <div>
-                    {/*-------- Asset Name and Category Name----------*/}
-                    <div className="flex gap-4">
-                    {/* Asset Name */}
-                    <div className="flex flex-col">
+                    <div className="flex">
                         <label
-                            htmlFor="assetName"
-                            className={`font-medium text-md text-blue-primary block mb-1 mr-5`}
-                        > Asset Name</label>
+                            htmlFor="has-start-date"
+                            className="mr-2"
+                        >
+                            Has Start Date
+                        </label>
                         <input
-                            name="assetName"
-                            id="assetName"
-                            placeholder="Ikoyi, Lagos Address"
-                            value={assetName}
-                            onChange={(e) => setAssetName(e.target.value)}
+                            type="checkbox"
+                            name="has-start-date"
+                            id="has-start-date"
+                            value={hasStartDate}
+                            onChange={(e) => setHasStartDate(e.target.checked)}
+                        />
+                    </div>
+                    {hasStartDate && (
+                        <input
+                            type="date"
+                            name="start-date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                        />
+                    )}
+                </div>
+                {/* ==== Has End Date ==== */}
+                <div>
+                    <div className="flex">
+                        <label
+                            htmlFor="has-end-date"
+                            className="mr-2"
+                        >
+                            Has End Date
+                        </label>
+                        <input
+                            type="checkbox"
+                            name="has-end-date"
+                            id="has-end-date"
+                            value={hasEndDate}
+                            onChange={(e) => setHasEndDate(e.target.checked)}
+                        />
+                    </div>
+                    {hasEndDate && (
+                        <input
+                            type="date"
+                            name="start-date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="rounded border px-2 py-0.5 w-52 text-blue-primary"
+                        />
+                    )}
+                </div>
+                </div>
+                {/* ==== Title and Subtitle ==== */}
+                <div>
+                    {/* ==== Title ==== */}
+                    <div>
+                        <label
+                            htmlFor="title"
+                            className="mr-2 font-medium text-md text-blue-primary block mb-1"
+                        >
+                                Title
+                        </label>
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            placeholder={"title"}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                             className="rounded border px-2 py-0.5 w-52 text-blue-primary"
                         />
                     </div>
                     
-                    {/* Category Name */}
+                    {/* ==== Subtitle ==== */}
                     <div>
-                        <FormSelector
-                            name="category"
-                            id="category"
-                            options={cate}
-                            label="Category"
-                            style="flex flex-col"
-                            setValue={setAssetCategory}
-                        />
-                    </div>
-                    </div>
-                    {/* Dynamic input fields */}
-                    {
-                        fields.map((field, index) => (
-                            <div key={index} className="flex">
-                                <div className="mr-2 mt-5 border-red-50 rounded">
-                                    <FormInputField
-                                        inputKey={field.inputKey}
-                                        inputType={field.inputType}
-                                        inputValue={field.inputValue}
-                                        setInputKey={(value) => updateField(index, 'inputKey', value)}
-                                        setInputType={(value) => updateField(index, 'inputType', value)}
-                                        setInputValue={(value) => updateField(index, 'inputValue', value)}
-                                    />
-                                </div>
-
-                                <div className="flex items-end">
-                                    {/* Plus/Minus Buttons */}
-                                    {index === fields.length - 1 ? (
-                                        <button
-                                            type="button" onClick={addField}
-                                            className="p-1 rounded-full border"
-                                        >
-                                            <FaPlus 
-                                                className="text-blue-primary"
-                                            />
-                                        </button>
-                                    ) : (
-                                        <button
-                                            type="button"
-                                            onClick={() => removeField(index)}
-                                            className="p-1 rounded-full border"
-                                        >
-                                            <FaMinus
-                                                className="text-blue-primary"
-                                            />
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        ))
-                    }
-                    {/* Submit Button */}
-                    <div className="mt-5">
-                        <Button
-                            text="Create"
-                            style="solid"
-                            onClick={(e) => {e.preventDefault(); handleSubmit() }}
+                        <label
+                            htmlFor="subtitle"
+                            className="mr-2 font-medium text-md text-blue-primary block mb-1"
+                        >
+                                Subtitle
+                        </label>
+                        <input
+                            type="text"
+                            name="subtitle"
+                            id="subtitle"
+                            placeholder={"subtitle"}
+                            value={subtitle}
+                            onChange={(e) => setSubtitle(e.target.value)}
+                            className="rounded border px-2 py-0.5 w-52 text-blue-primary"
                         />
                     </div>
                 </div>
+                {/* ==== Description ==== */}
+                <div>
+                    <MDXEditor
+                        markdown="#helloworld"
+                        plugins={[headingsPlugin(), listsPlugin(), quotePlugin(), thematicBreakPlugin()]}
+                    />
+                </div>
             </form>
         </div>
-    );
-};
-
-export default AssetForm;
-
+    )
+}
+export default AssetForm
