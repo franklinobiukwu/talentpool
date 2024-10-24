@@ -10,8 +10,12 @@ const InfoCard = (props) => {
                 </div>
                 {/* Details */}
                 <div>
-                    <h3 className="font-inter font-bold text-sm text-blue-primary">Franklin Obiukwu{props.name}</h3>
-                    <p className="font-roboto text-sm text-blue-primary">obiukwuchibuisi@gmail.com {props.email}</p>
+                    <h3 className="font-inter font-bold text-sm text-blue-primary">
+                        {props.user.firstname} {props?.user?.lastname}
+                    </h3>
+                    <p className="font-roboto text-sm text-blue-primary">
+                        {props?.user?.email}
+                    </p>
                 </div>
             </div>
         </div>

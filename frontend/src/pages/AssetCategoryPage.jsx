@@ -1,5 +1,7 @@
+import AssetCard from "../components/AssetCard"
 import { fetchData } from "../hooks/useFetchPost"
 import { useQuery } from "@tanstack/react-query"
+import Skeleton from "react-loading-skeleton"
 import { useParams } from "react-router-dom"
 
 const AssetCategoryPage = () => {
@@ -11,8 +13,12 @@ const AssetCategoryPage = () => {
         queryFn: () => fetchData(`/assets/categories/${categoryId}`)
     })
     return (
-        <div>
-            <p>Asset Category Page</p>
+        <div className="py-10">
+            <div>
+                {!data? <Skeleton count={2}/> : (
+                    data.data.map(asset => <AssetCard asset={asset}/>)
+                ) }
+            </div>
         </div>
     )
 }

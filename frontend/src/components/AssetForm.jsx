@@ -32,6 +32,7 @@ const AssetForm = () => {
         mutationFn: postData,
         onSuccess: (data) => {
             console.log(`Success creating asset`, data.data)
+            setAssetCategory('')
             setStartDate('')
             setEndDate('')
             setTitle('')

@@ -4,12 +4,16 @@ import ListCardHeading from "../components/ListCardHeading"
 import PersonalInfo from "../components/PersonalInfoForm"
 
 const ProfilePage = () => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
     return (
         <div className="lg:grid grid-cols-12 gap-4 p-10">
             <div className="col-span-6">
                 {/* User Name and Email*/}
                 <div className="mb-4">
-                    <InfoCard/>
+                    <InfoCard
+                        user={user}
+                    />
                 </div>
                 {/* About Me */}
                 <div className="mb-8">

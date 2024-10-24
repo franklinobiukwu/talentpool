@@ -9,7 +9,7 @@ const AssetsPage = () => {
 //    const assetCategories =  a
     const {data, isPending, isError, error} = useQuery({
         queryKey: ['assetCategories'],
-        queryFn: () => fetchData('/assets/categories')
+        queryFn: () => fetchData('/assets/categories'),
     })
     console.log(data?.data, "categories")
     return (
