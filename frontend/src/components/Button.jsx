@@ -9,11 +9,12 @@ const Button = (props) => {
     const solid = `px-4 py-1.5 bg-blue-primary text-white-primary
                         rounded border border-blue-primary font-bold font-inter flex items-center text-sm`;
 
+    console.log(props.type || "me")
     return (
         <button
             onClick={props.onClick&&props.onClick}
             disabled={props.disabled&&props.disabled}
-            type="button"
+            type={props.type || "button"}
         >
         <Link to={props.path}>
         {props.isLoading?(

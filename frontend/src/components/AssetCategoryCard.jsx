@@ -11,7 +11,7 @@ const AssetCategoryCard = (props) => {
                 </div>
                 {/* Title */}
                 <div className="text-blue-primary bg-red-50 font-inter font-extrabold px-5">
-                    <h2 className="text-center">Certification and Licenses</h2>
+                    <h2 className="text-center">{props.name}</h2>
                 </div>
             </Link>
         </div>

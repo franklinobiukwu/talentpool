@@ -17,10 +17,9 @@ router.post('/signup', signupUser)
 router.use(requireAuth)
 
 // Update Profile (Create, Update, Delete)
-router.post('/profile', updateProfile)
+router.patch('/profile', updateProfile)
 
 // Fetch User Profile
 router.get('/profile', fetchProfile)
-console.log('PASTTTTTTTT')
 
 export default router

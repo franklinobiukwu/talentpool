@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 // Import Routes
 import userRoutes from './routes/userRoutes/userRoutes.js'
 import tokenRoutes from './routes/tokenRoutes.js'
+import assetRoutes from './routes/assetRoutes.js'
 
 // Port to listen
 const PORT = process.env.PORT || 3000
@@ -26,6 +27,7 @@ app.use(cookieParser())
 // Routes
 app.use("/user", userRoutes)
 app.use("/token", tokenRoutes)
+app.use("/assets", assetRoutes)
 
 
 // Connect to database

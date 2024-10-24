@@ -37,12 +37,9 @@ const refreshAccessToken = async (req, res) => {
 
 const confirmRefreshToken = async (req, res) => {
     const refreshToken = req.cookies.refreshToken
-    console.log('About to confirm token')
-    console.log(`${refreshToken}`, "The refresh Token")
 
     try{
         const {_id} = jwt.verify(refreshToken, process.env.REFRESH_TOKEN)
-        console.log(_id, "The ID")
         await User.findOne({_id})
 
         res.status(200).json({message: true})

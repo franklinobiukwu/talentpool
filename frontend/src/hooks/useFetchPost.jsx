@@ -20,7 +20,7 @@ const fetchData = (endpoint) => {
 }
 
 // Function to Post to Backend
-const postData = (endpoint, data) => {
+const postData = ({endpoint, data}) => {
 
     // Get user
     const user = JSON.parse(localStorage.getItem('user'))
